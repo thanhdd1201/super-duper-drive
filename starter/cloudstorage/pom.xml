@@ -11,11 +11,11 @@
     <groupId>com.udacity.jwdnd.course1</groupId>
     <artifactId>cloudstorage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cloudstorage</name>
+    <name>cloudStorage</name>
     <description>Final Project for Udacity's Spring Boot Basics course.</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>14</java.version>
     </properties>
 
     <dependencies>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.1</version>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>

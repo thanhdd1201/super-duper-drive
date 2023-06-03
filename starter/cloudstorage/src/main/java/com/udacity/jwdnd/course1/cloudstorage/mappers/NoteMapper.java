@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
-import com.udacity.jwdnd.course1.cloudstorage.models.Note;
+import com.udacity.jwdnd.course1.cloudstorage.models.Notes;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -8,22 +8,19 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface NotesMapper {
-    @Select("SELECT * FROM NOTE")
-    List<Note> findAll();
+public interface NoteMapper {
+    @Select("SELECT * FROM NOTES WHERE noteId = #{noteId}")
+    Notes findOne(int noteId);
 
-    @Select("SELECT * FROM NOTE WHERE noteId = #{noteId}")
-    public Note findOne(int noteId);
+    @Select("SELECT * FROM NOTES WHERE userId = #{userId}")
+    List<Notes> findByUserId(int userId);
 
-    @Select("SELECT * FROM NOTE WHERE userid = #{userId}")
-    public List<Note> findByUserId(int userId);
+    @Insert("INSERT INTO NOTES (noteTitle, noteDescription, userid) VALUES (#{noteTitle}, #{noteDescription}, #{userId})")
+    int insertNote(Notes note);
 
-    @Insert("INSERT INTO NOTE (noteTitle, noteDescription, userid) VALUES (#{note.noteTitle}, #{note.noteDescription}, #{userid})")
-    public int insertNote(Note note, int userid);
+    @Delete("DELETE FROM NOTES WHERE noteId = #{noteId}")
+    int deleteNote(int noteId);
 
-    @Delete("DELETE FROM NOTE WHERE noteId = #{noteId}")
-    public int deleteNote(int noteId);
-
-    @Update("UPDATE NOTE SET noteTitle = #{noteTitle}, noteDescription = #{noteDescription} WHERE noteId = #{noteId}")
-    public int updateNote(Note note);
+    @Update("UPDATE NOTES SET noteTitle = #{noteTitle}, noteDescription = #{noteDescription} WHERE noteId = #{noteId}")
+    int updateNote(Notes note);
 }

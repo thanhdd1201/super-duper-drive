@@ -1,24 +1,20 @@
 package com.udacity.jwdnd.course1.cloudstorage.models;
 
-public class User  {
+public class Users {
     private Integer userId;
     private String username;
     private String salt;
     private String password;
     private String firstName;
     private String lastName;
-    private Boolean enabled = false;
-    private String role = "USER";
 
-    public User(Integer userId, String username, String salt, String password, String firstName, String lastName, Boolean enabled, String role) {
+    public Users(Integer userId, String username, String salt, String password, String firstName, String lastName) {
         this.userId = userId;
         this.username = username;
         this.salt = salt;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.enabled = enabled;
-        this.role = role;
     }
 
     public int getUserId() {
@@ -67,21 +63,5 @@ public class User  {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

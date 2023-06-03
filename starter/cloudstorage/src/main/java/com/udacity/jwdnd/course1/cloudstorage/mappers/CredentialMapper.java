@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
-import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.models.Credentials;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -9,22 +9,19 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface CredentialsMapper {
-    @Select("SELECT * FROM CREDENTIAL")
-    List<Credential> findAll();
+public interface CredentialMapper {
+    @Select("SELECT * FROM CREDENTIALS WHERE credentialId = #{credentialId}")
+    Credentials findOne(int credentialId);
 
-    @Select("SELECT * FROM CREDENTIAL WHERE credentialId = #{credentialId}")
-    Credential findOne(int credentialId);
+    @Select("SELECT * FROM CREDENTIALS WHERE userId = #{userId}")
+    List<Credentials> findByUserId(int userId);
 
-    @Select("SELECT * FROM CREDENTIAL WHERE userId = #{userId}")
-    List<Credential> findByUserId(int userId);
+    @Insert("INSERT INTO CREDENTIALS (url, username, securityKey, password, userId) VALUES (#{url}, #{username}, #{securityKey}, #{password}, #{userId})")
+    int insertCredential(Credentials credentials);
 
-    @Insert("INSERT INTO CREDENTIAL (url, username, key, password, userId) VALUES (#{credential.url}, #{credential.username}, #{credential.key}, #{credential.password}, #{credential.userId})")
-    int insertCredential(Credential credential);
-
-    @Delete("DELETE FROM CREDENTIAL WHERE credentialId = #{credentialId}")
+    @Delete("DELETE FROM CREDENTIALS WHERE credentialId = #{credentialId}")
     int deleteCredential(int credentialId);
 
-    @Update("UPDATE CREDENTIAL SET url = #{url}, username = #{username}, key = #{key}, password = #{password} WHERE credentialId = #{credentialId}")
-    int updateCredential(Credential credential);
+    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, securityKey = #{securityKey}, password = #{password} WHERE credentialId = #{credentialId}")
+    int updateCredential(Credentials credentials);
 }
