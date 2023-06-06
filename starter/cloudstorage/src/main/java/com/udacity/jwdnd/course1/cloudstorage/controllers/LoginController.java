@@ -19,4 +19,10 @@ public class LoginController {
         model.addAttribute("isAuthenticationFail", true);
         return "login";
     }
+
+    @GetMapping("/success")
+    public String SignUpSuccess(Model model){
+        model.addAttribute("signupSuccess", true);
+        return "login";
+    }
 }

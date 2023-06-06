@@ -9,10 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.web.server.LocalServerPort;
 
 import java.io.File;
-import java.time.Duration;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
@@ -20,7 +19,7 @@ class CloudStorageApplicationTests {
 	@LocalServerPort
 	private int port;
 
-	final Duration timeout = Duration.ofSeconds(2);
+	final long timeout = 2;
 
 	private WebDriver driver;
 
@@ -139,7 +138,7 @@ class CloudStorageApplicationTests {
 		doMockSignUp("Redirection","Test","RT","123");
 
 		// Check if we have been redirected to the log in page.
-		Assertions.assertEquals("http://localhost:" + this.port + "/login", driver.getCurrentUrl());
+		Assertions.assertEquals("http://localhost:" + this.port + "/login/success", driver.getCurrentUrl());
 	}
 
 	/**
@@ -243,7 +242,7 @@ class CloudStorageApplicationTests {
 
 		var found = wait.until(ExpectedConditions.textToBe(
 				By.xpath("//*[@id='userTable']/tbody/tr/th"),
-				"Selenium new note.")
+				"Test note title.")
 		);
 
 		Assertions.assertTrue(found);
@@ -265,11 +264,11 @@ class CloudStorageApplicationTests {
 
 		var noteTitleInput = wait.until(ExpectedConditions.elementToBeClickable(By.id("note-title")));
 		noteTitleInput.clear();
-		noteTitleInput.sendKeys("Selenium edited...");
+		noteTitleInput.sendKeys("Note title edited");
 
 		var noteDescriptionInput = wait.until(ExpectedConditions.elementToBeClickable(By.id("note-description")));
 		noteDescriptionInput.clear();
-		noteDescriptionInput.sendKeys("This is just another exercise.");
+		noteDescriptionInput.sendKeys("Test note description.");
 
 		var saveNoteButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("save-note")));
 		saveNoteButton.click();
@@ -283,7 +282,7 @@ class CloudStorageApplicationTests {
 
 		var found = wait.until(ExpectedConditions.textToBe(
 				By.xpath("//*[@id='userTable']/tbody/tr/th"),
-				"Selenium edited...")
+				"Note title edited")
 		);
 
 		Assertions.assertTrue(found);

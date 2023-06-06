@@ -2,12 +2,13 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Users;
 import org.apache.ibatis.annotations.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
 @Repository
+@Mapper
 public interface UserMapper {
     @Select("SELECT * FROM USERS")
     List<Users> findAll();

@@ -1,31 +1,34 @@
 package com.udacity.jwdnd.course1.cloudstorage.configs;
 
 import com.udacity.jwdnd.course1.cloudstorage.services.AuthenticationService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationService authenticationService;
 
     public SecurityConfig(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests(request -> request.requestMatchers("/signup", "signup/success",  "/css/**", "/js/**")
-                        .permitAll().anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login").failureUrl("/login/error").permitAll()
-                        .defaultSuccessUrl("/home", true))
-                .logout(LogoutConfigurer::permitAll);
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(this.authenticationService);
+    }
 
-        return http.build();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                        .antMatchers("/signup", "/login/success", "/css/**", "/js/**").permitAll()
+                        .anyRequest().authenticated();
+        http.formLogin().loginPage("/login").permitAll().failureUrl("/login/error");
+        http.formLogin().defaultSuccessUrl("/home", true);
     }
 }
